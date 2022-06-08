@@ -201,11 +201,29 @@ WHERE nominee = 'Abigail Breslin';
 
 <img width="215" alt="image" src="https://user-images.githubusercontent.com/81607668/172542574-f557cfac-b3bc-4201-aefa-953700d04d02.png">
 
+***
 
 ## Level: Medium
 
+### 📌 Workers With The Highest Salaries
+[Question: ](https://platform.stratascratch.com/coding/10353-workers-with-the-highest-salaries?code_type=1) Find the titles of workers that earn the highest salary. Output the highest-paid title or multiple titles that share the highest salary.
 
+```sql
+-- Ranked salary using DENSE_RANK() whereby records with the same salaries are assigned with same ranking
+WITH grouped_salary AS (
+  SELECT 
+    t.worker_title, w.salary, 
+    DENSE_RANK() OVER (ORDER BY w.salary DESC) AS ranking
+  FROM worker w
+  INNER JOIN title t
+    ON w.worker_id = t.worker_ref_id)
+    
+SELECT worker_title
+FROM grouped_salary
+WHERE ranking = 1;
+```
 
+<img width="314" alt="image" src="https://user-images.githubusercontent.com/81607668/172554310-647f9db6-d4a0-4c73-a8ce-780db82194c3.png">
 
 
 
