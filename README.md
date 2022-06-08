@@ -190,3 +190,24 @@ Note: _The official solution has only 1 retrieved record, however the question d
 
 <img width="592" alt="image" src="https://user-images.githubusercontent.com/81607668/172541703-bad2f432-9463-4976-b274-b942b242f74e.png">
 
+### 📌 Count the number of movies that Abigail Breslin nominated for oscar
+[Question: ](https://platform.stratascratch.com/coding/10128-count-the-number-of-movies-that-abigail-breslin-nominated-for-oscar?code_type=1) Count the number of movies that Abigail Breslin was nominated for an oscar.
+
+```sql
+SELECT COUNT(DISTINCT movie) AS movie_count
+FROM oscar_nominees
+WHERE nominee = 'Abigail Breslin';
+```
+
+<img width="215" alt="image" src="https://user-images.githubusercontent.com/81607668/172542574-f557cfac-b3bc-4201-aefa-953700d04d02.png">
+
+
+## Level: Medium
+
+
+
+
+
+
+
+
