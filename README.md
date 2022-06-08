@@ -6,9 +6,9 @@ I'll be solving SQL questions and sharing my answers.
 
 ### Table of Contents
 
-- [Easy](#level:-easy)
-- [Intermediate]
-- [Hard]
+- [Level: Easy](##level-easy)
+- [Intermediate](##level-intermediate)
+- [Hard](##level-hard)
 
 ***
 
@@ -19,7 +19,8 @@ I'll be solving SQL questions and sharing my answers.
 
 ```sql
 SELECT 
-  MAX(CASE WHEN d.department = 'marketing' THEN salary END) - MAX(CASE WHEN d.department = 'engineering' THEN salary END) as salary_diff
+  MAX(CASE WHEN d.department = 'marketing' THEN salary END) - 
+    MAX(CASE WHEN d.department = 'engineering' THEN salary END) as salary_diff
 FROM db_employee e
 INNER JOIN db_dept d
   ON e.department_id = d.id
