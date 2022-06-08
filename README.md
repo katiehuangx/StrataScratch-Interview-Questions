@@ -6,6 +6,10 @@ I'll be solving SQL questions and sharing my answers.
 
 ### Table of Contents
 
+- [Easy](#level:-easy)
+- [Intermediate]
+- [Hard]
+
 ***
 
 ## Level: Easy
