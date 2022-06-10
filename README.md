@@ -239,6 +239,7 @@ FROM amazon_transactions
 user_id 100 makes their first purchase on 2020-03-07 and a second purchase on 2020-03-13.
 
 ```sql
+-- Method 1: Using a CTE
 -- Note that I've converted the query previously into a CTE
 WITH next_date_cte AS (
   SELECT 
@@ -254,8 +255,22 @@ FROM next_date_cte
 WHERE (next_date - created_at) < 7 -- Filter results to purchases made within 7 days
 ```
 
+
 <img width="591" alt="image" src="https://user-images.githubusercontent.com/81607668/172989852-7e59bdac-59b8-4206-9951-d43e1957a99d.png">
 
+```sql
+-- Method 2: Using a Subquery
+SELECT 
+  DISTINCT user_id
+FROM 
+  (SELECT 
+    id, 
+    user_id, 
+    created_at,
+    LEAD(created_at) OVER (PARTITION BY user_id ORDER BY created_at) AS next_date
+  FROM amazon_transactions) AS subquery
+WHERE (next_date - created_at) < 7;
+```
 
 Table: amazon_transactions
 
