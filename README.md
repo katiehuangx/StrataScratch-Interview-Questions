@@ -254,8 +254,6 @@ FROM next_date_cte
 WHERE (next_date - created_at) < 7 -- Filter results to purchases made within 7 days
 ```
 
-<img width="591" alt="image" src="https://user-images.githubusercontent.com/81607668/172989852-7e59bdac-59b8-4206-9951-d43e1957a99d.png">
-
 ```sql
 -- Method 2: Using a Subquery
 SELECT 
@@ -270,7 +268,7 @@ FROM
 WHERE (next_date - created_at) < 7;
 ```
 
-<img width="572" alt="image" src="https://user-images.githubusercontent.com/81607668/173009944-d5e14e93-dc3c-4e4f-a97a-1ad6db76f303.png">
+<img width="591" alt="image" src="https://user-images.githubusercontent.com/81607668/172989852-7e59bdac-59b8-4206-9951-d43e1957a99d.png">
 
 ### 📌 Amazon | Highest Cost Orders
 [Question: ](https://platform.stratascratch.com/coding/9915-highest-cost-orders?code_type=1) Find the customer with the highest daily total order cost between 2019-02-01 to 2019-05-01. If customer had more than one order on a certain day, sum the order costs on daily basis. Output customer's first name, total cost of their items, and the date. For simplicity, you can assume that every first name in the dataset is unique.
