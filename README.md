@@ -314,5 +314,25 @@ FROM
       ) AS daily_order
   ) AS ranked -- Name of Subquery #1
 WHERE ranking = 1;
+```
 
 <img width="548" alt="image" src="https://user-images.githubusercontent.com/81607668/173015975-0089844c-869b-4474-9f04-955da38df1e0.png">
+
+### 📌 ESPN | Largest Olympics
+[Question: ](https://platform.stratascratch.com/coding/9942-largest-olympics?code_type=1) Find the Olympics with the highest number of athletes. The Olympics game is a combination of the year and the season, and is found in the 'games' column. Output the Olympics along with the corresponding number of athletes.
+
+```sql
+SELECT 
+  games, athlete_count
+FROM 
+  (SELECT 
+    games, 
+    COUNT(DISTINCT id) AS athlete_count,
+    ROW_NUMBER() OVER (ORDER BY COUNT(DISTINCT id) DESC) AS ranking
+   FROM olympics_athletes_events
+   GROUP BY games
+  ) AS subquery
+WHERE ranking = 1;
+```
+
+<img width="543" alt="image" src="https://user-images.githubusercontent.com/81607668/173026408-5bf6cb13-a880-4ae0-8e46-e5f9f6af8817.png">
