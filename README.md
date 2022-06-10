@@ -240,7 +240,6 @@ user_id 100 makes their first purchase on 2020-03-07 and a second purchase on 20
 
 ```sql
 -- Method 1: Using a CTE
--- Note that I've converted the query previously into a CTE
 WITH next_date_cte AS (
   SELECT 
       id, 
