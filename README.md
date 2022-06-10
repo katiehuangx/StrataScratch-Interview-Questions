@@ -254,7 +254,6 @@ FROM next_date_cte
 WHERE (next_date - created_at) < 7 -- Filter results to purchases made within 7 days
 ```
 
-
 <img width="591" alt="image" src="https://user-images.githubusercontent.com/81607668/172989852-7e59bdac-59b8-4206-9951-d43e1957a99d.png">
 
 ```sql
@@ -271,8 +270,51 @@ FROM
 WHERE (next_date - created_at) < 7;
 ```
 
-Table: amazon_transactions
+<img width="572" alt="image" src="https://user-images.githubusercontent.com/81607668/173009944-d5e14e93-dc3c-4e4f-a97a-1ad6db76f303.png">
 
-<img width="565" alt="image" src="https://user-images.githubusercontent.com/81607668/172990151-acfc7007-9273-41ac-b397-acf412110e53.png">
+### 📌 Highest Cost Orders
+[Question: ](https://platform.stratascratch.com/coding/9915-highest-cost-orders?code_type=1) Find the customer with the highest daily total order cost between 2019-02-01 to 2019-05-01. If customer had more than one order on a certain day, sum the order costs on daily basis. Output customer's first name, total cost of their items, and the date. For simplicity, you can assume that every first name in the dataset is unique.
 
+I took some time with this as I tried solving it with 1 CTE, but I couldn't and ended up with 2 CTEs. Not my most elegant solution, but it works. 
 
+```sql
+-- Method 1: Using CTE
+WITH daily_order AS (
+SELECT DISTINCT c.first_name, SUM(o.total_order_cost) OVER (PARTITION BY c.first_name, o.order_date) AS total_cost, o.order_date
+FROM customers c
+LEFT JOIN orders o
+    ON c.id = o.cust_id
+WHERE o.order_date BETWEEN '2019-02-01' AND '2019-05-01'),
+ranked AS (
+SELECT first_name, total_cost, order_date, ROW_NUMBER() OVER (ORDER BY total_cost DESC) AS ranking
+FROM daily_order)
+
+SELECT first_name, total_cost, order_date
+FROM ranked
+WHERE ranking = 1;
+```
+
+```sql
+-- Method 2: Using subquery
+SELECT 
+  first_name, total_cost, order_date
+FROM 
+-- Subquery #1
+  (SELECT 
+    first_name, total_cost, order_date, 
+    ROW_NUMBER() OVER (ORDER BY total_cost DESC) AS ranking
+  FROM  
+  -- Subquery #3
+      (SELECT 
+        DISTINCT c.first_name, 
+        SUM(o.total_order_cost) OVER (PARTITION BY c.first_name, o.order_date) AS total_cost, 
+        o.order_date
+      FROM customers c
+      LEFT JOIN orders o
+        ON c.id = o.cust_id
+      WHERE o.order_date BETWEEN '2019-02-01' AND '2019-05-01'
+      ) AS daily_order
+  ) AS ranked -- Name of Subquery #1
+WHERE ranking = 1;
+
+<img width="548" alt="image" src="https://user-images.githubusercontent.com/81607668/173015975-0089844c-869b-4474-9f04-955da38df1e0.png">
