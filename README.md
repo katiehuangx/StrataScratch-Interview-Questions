@@ -6,10 +6,6 @@ I'll be solving SQL questions and sharing my answers.
 
 ### Table of Contents
 
-- [Level: Easy](##level-easy)
-- [Intermediate](##level-intermediate)
-- [Hard](##level-hard)
-
 ***
 
 ## Level: Easy
@@ -225,7 +221,44 @@ WHERE ranking = 1;
 
 <img width="314" alt="image" src="https://user-images.githubusercontent.com/81607668/172554310-647f9db6-d4a0-4c73-a8ce-780db82194c3.png">
 
+### 📌 Finding User Purchases
+[Question: ](https://platform.stratascratch.com/coding/10322-finding-user-purchases?code_type=1) Write a query that'll identify returning active users. A returning active user is a user that has made a second purchase within 7 days of any other of their purchases. Output a list of user_ids of these returning active users.
+
+I'm going to build this query and show you the results as I go. 
+
+Step 1: Pull all the records with the next date when the user makes their second, third, etc purchases
+```sql
+SELECT 
+  id, user_id, created_at,
+  LEAD(created_at) OVER (PARTITION BY user_id ORDER BY created_at) AS next_date
+FROM amazon_transactions
+```
+
+<img width="656" alt="image" src="https://user-images.githubusercontent.com/81607668/172988726-8b9fa90d-ff2b-4df8-acfa-4ec82e15a825.png">
+
+user_id 100 makes their first purchase on 2020-03-07 and a second purchase on 2020-03-13.
+
+```sql
+-- Note that I've converted the query previously into a CTE
+WITH next_date_cte AS (
+  SELECT 
+      id, 
+      user_id, 
+      created_at,
+      LEAD(created_at) OVER (PARTITION BY user_id ORDER BY created_at) AS next_date
+  FROM amazon_transactions)
+
+SELECT 
+  DISTINCT user_id
+FROM next_date_cte
+WHERE (next_date - created_at) < 7 -- Filter results to purchases made within 7 days
+```
+
+<img width="591" alt="image" src="https://user-images.githubusercontent.com/81607668/172989852-7e59bdac-59b8-4206-9951-d43e1957a99d.png">
 
 
+Table: amazon_transactions
+
+<img width="565" alt="image" src="https://user-images.githubusercontent.com/81607668/172990151-acfc7007-9273-41ac-b397-acf412110e53.png">
 
 
