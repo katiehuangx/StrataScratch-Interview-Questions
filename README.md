@@ -302,7 +302,7 @@ FROM
     first_name, total_cost, order_date, 
     ROW_NUMBER() OVER (ORDER BY total_cost DESC) AS ranking
   FROM  
-  -- Subquery #3
+  -- Subquery #2
       (SELECT 
         DISTINCT c.first_name, 
         SUM(o.total_order_cost) OVER (PARTITION BY c.first_name, o.order_date) AS total_cost, 
