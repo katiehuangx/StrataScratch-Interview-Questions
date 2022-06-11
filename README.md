@@ -251,7 +251,7 @@ WITH next_date_cte AS (
 SELECT 
   DISTINCT user_id
 FROM next_date_cte
-WHERE (next_date - created_at) < 7 -- Filter results to purchases made within 7 days
+WHERE (next_date - created_at) <= 7 -- within 7 days means including 7th day
 ```
 
 ```sql
@@ -265,7 +265,7 @@ FROM
     created_at,
     LEAD(created_at) OVER (PARTITION BY user_id ORDER BY created_at) AS next_date
   FROM amazon_transactions) AS subquery
-WHERE (next_date - created_at) < 7;
+WHERE (next_date - created_at) <= 7 -- within 7 days means including 7th day;
 ```
 
 <img width="591" alt="image" src="https://user-images.githubusercontent.com/81607668/172989852-7e59bdac-59b8-4206-9951-d43e1957a99d.png">
