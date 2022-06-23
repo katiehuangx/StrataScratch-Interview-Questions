@@ -374,5 +374,34 @@ FROM (
 
 <img width="574" alt="image" src="https://user-images.githubusercontent.com/81607668/175274658-3106dc7d-264d-4da5-b66a-e1d3f17c26e9.png">
 
+### 📌 AirBnb | Find matching hosts and guests in a way that they are both of the same gender and nationality
+[Question: ](https://platform.stratascratch.com/coding/10078-find-matching-hosts-and-guests-in-a-way-that-they-are-both-of-the-same-gender-and-nationality?code_type=1) Find matching hosts and guests pairs in a way that they are both of the same gender and nationality. Output the host id and the guest id of matched pair.
 
+```sql
+SELECT 
+  DISTINCT h.host_id, 
+  g.guest_id
+FROM airbnb_hosts h
+JOIN airbnb_guests g
+  ON h.gender = g.gender
+  AND h.nationality = g.nationality;
+```
+
+### 📌 AirBnb | Number Of Units Per Nationality
+[Question: ](https://platform.stratascratch.com/coding/10156-number-of-units-per-nationality?code_type=1) Find the number of apartments per nationality that are owned by people under 30 years old. Output the nationality along with the number of apartments. Sort records by the apartments count in descending order.
+
+```sql
+SELECT 
+  h.nationality, 
+  COUNT(DISTINCT u.unit_id) AS total_apartment
+FROM airbnb_hosts h
+JOIN airbnb_units u
+  ON h.host_id = u.host_id
+WHERE h.age < 30
+  AND u.unit_type = 'Apartment'
+GROUP BY h.nationality
+ORDER BY total_apartment DESC;
+```
+
+<img width="455" alt="image" src="https://user-images.githubusercontent.com/81607668/175324112-de0d9323-8914-4c14-af7b-83e1d7d19dc4.png">
 
