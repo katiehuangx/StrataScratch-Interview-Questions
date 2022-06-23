@@ -372,3 +372,7 @@ FROM (
  AS total_messages;
 ```
 
+<img width="574" alt="image" src="https://user-images.githubusercontent.com/81607668/175274658-3106dc7d-264d-4da5-b66a-e1d3f17c26e9.png">
+
+
+
