@@ -336,3 +336,39 @@ WHERE ranking = 1;
 ```
 
 <img width="543" alt="image" src="https://user-images.githubusercontent.com/81607668/173026408-5bf6cb13-a880-4ae0-8e46-e5f9f6af8817.png">
+
+### 📌 AirBnb | Ranking Most Active Guests
+[Question: ](https://platform.stratascratch.com/coding/10159-ranking-most-active-guests?code_type=1) Rank guests based on the number of messages they've exchanged with the hosts. Guests with the same number of messages as other guests should have the same rank. Do not skip rankings if the preceding rankings are identical. Output the rank, guest id, and number of total messages they've sent. Order by the highest number of total messages first.
+
+```sql
+WITH total_messages AS (
+  SELECT 
+    id_guest, 
+    SUM(n_messages) AS message_count
+FROM airbnb_contacts
+GROUP BY id_guest
+)
+
+-- Method 1: CTE
+SELECT 
+  DENSE_RANK() OVER (ORDER BY message_count DESC) AS ranking, 
+  id_guest, 
+  message_count
+FROM total_messages;
+```
+
+```sql
+-- Method 2: Subquery
+SELECT 
+  DENSE_RANK() OVER (ORDER BY message_count DESC) AS ranking, 
+  id_guest, 
+  message_count
+FROM (
+  SELECT 
+    id_guest, 
+    SUM(n_messages) AS message_count
+  FROM airbnb_contacts
+  GROUP BY id_guest) 
+ AS total_messages;
+```
+
