@@ -405,3 +405,16 @@ ORDER BY total_apartment DESC;
 
 <img width="455" alt="image" src="https://user-images.githubusercontent.com/81607668/175324112-de0d9323-8914-4c14-af7b-83e1d7d19dc4.png">
 
+### 📌 City of San Francisco | Number of violations
+[Question: ](https://platform.stratascratch.com/coding/9728-inspections-that-resulted-in-violations?code_type=1) You're given a dataset of health inspections. Count the number of violation in an inspection in 'Roxanne Cafe' for each year. If an inspection resulted in a violation, there will be a value in the 'violation_id' column. Output the number of violations by year in ascending order.
+
+```sql
+SELECT
+  EXTRACT(YEAR FROM inspection_date) AS year, 
+  COUNT(violation_id) AS violation_count
+FROM sf_restaurant_health_violations
+WHERE business_name = 'Roxanne Cafe'
+    AND violation_id IS NOT NULL
+GROUP BY EXTRACT(YEAR FROM inspection_date)
+ORDER BY year;
+```
