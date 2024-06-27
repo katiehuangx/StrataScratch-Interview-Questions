@@ -143,4 +143,60 @@ lyft_drivers[(lyft_drivers['yearly_salary'] <= 30000) | (lyft_drivers['yearly_sa
 
 <img width="643" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/eafa7555-37ac-4865-b2cc-31b2fa0b6db4">
 
+### 📌 [Spotify | Easy | Find how many times each artist appeared on the Spotify ranking list](https://platform.stratascratch.com/coding/9992-find-artists-that-have-been-on-spotify-the-most-number-of-times?code_type=2)
 
+Find how many times each artist appeared on the Spotify ranking list. Output the artist name along with the corresponding number of occurrences. Order records by the number of occurrences in descending order.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+spotify_worldwide_daily_song_ranking.head()
+
+spotify_worldwide_daily_song_ranking
+  .groupby('artist') # Group results by artist
+  .size() # Count number of rows
+  .reset_index(name='n_occurences') # Re-name number of rows as 'n_occurences'
+  .sort_values(by='n_occurences', ascending=False) # Sort results in descending order
+```
+
+### 📌 [City of San Francisco | Easy | Find the base pay for Police Captains](https://platform.stratascratch.com/coding/9972-find-the-base-pay-for-police-captains?code_type=2)
+
+Find the base pay for Police Captains. Output the employee name along with the corresponding base pay.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+sf_public_salaries.head()
+
+# Filter results for job title containing 'Captain' in a case-insensitive manner
+captain_salaries = sf_public_salaries[sf_public_salaries['jobtitle'].str.contains('Captain', case=False)]
+
+# Output results showing employee name and base pay
+captain_salaries[['employeename', 'basepay']]
+```
+
+### 📌 [City of San Francisco | Easy | Find libraries who haven't provided the email address in circulation year 2016 but their notice preference definition is set to email](https://platform.stratascratch.com/coding/9924-find-libraries-who-havent-provided-the-email-address-in-2016-but-their-notice-preference-definition-is-set-to-email?code_type=2)
+
+Find libraries who haven't provided the email address in circulation year 2016 but their notice preference definition is set to email. Output the library code.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+library_usage.head()
+
+# Filter rows based on specified conditions
+filtered_libraries = library_usage[(library_usage['circulation_active_year'] == 2016 # Filter circulation year 2016
+  & (library_usage['notice_preference_definition'] == 'email') # Filter notice preference as email
+  & (library_usage['provided_email_address'] == False)] # Filter libraries who did not provide email
+
+# Get unique values of 'home_library_code' column  
+filtered_libraries['home_library_code'].unique()
+```
+
+<img width="282" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/160c3b60-a818-4549-aa44-6bd01e6c50ad">
