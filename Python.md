@@ -56,7 +56,7 @@ hotel_reviews.head()
 # Filter for hotel name == 'Hotel Arena'
 # Output hotel name, review score, and number of rows
 hotel_reviews[hotel_reviews['hotel_name'] == 'Hotel Arena'] # Filter for 'Hotel Arena' hotels
-  .groupby(['reviewer_score', 'hotel_name'])
+  .groupby(['reviewer_score', 'hotel_name']) # Group by 'reviewer_score' and 'hotel_name'
   .size() # Count number of rows
   .reset_index(name='n_reviews') # Name the new column as 'n_reviews'
 ```
@@ -74,8 +74,7 @@ import pandas as pd
 # Start writing code
 oscar_nominees.head()
 
-# Filter for actor Abigail Breslin
-# Count number of movies or rows
+# Filter for actor Abigail Breslin and count number of rows
 len(oscar_nominees[oscar_nominees['nominee'] == 'Abigail Breslin'])
 ```
 
@@ -92,16 +91,56 @@ import pandas as pd
 # Start writing code
 facebook_reactions.head()
 
-# Filter for heart reaction.
-# Include only 'post_id' rows and return unique values of post id
+# Filter for heart reactions and get unique post IDs
 # .loc is used to access a group of rows and columns by labels.
 heart_post_id = facebook_reactions.loc[facebook_reactions['reaction'] == 'heart', 'post_id'].unique()
 
-# Filter for post id in heart_post_id in facebook_posts
+# Filter facebook_posts for posts with IDs in heart_post_ids
 facebook_posts[facebook_posts['post_id'].isin(heart_post_id)]
 ```
 
 <img width="896" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/0cb45116-ed85-4313-af23-9334c75c5d55">
 
+### 📌 [Meta | Easy | Popularity of Hack](https://platform.stratascratch.com/coding/10061-popularity-of-hack/solutions?code_type=2)
+
+Find the average popularity of the Hack per office location. Output the location along with the average popularity.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+facebook_employees.head() # id, location
+facebook_hack_survey.head() # employee_id, popularity
+
+# Merge facebook_employees and facebook_hack_survey
+average_popularity_by_location = pd.merge(
+    facebook_employees[['id', 'location']], 
+    facebook_hack_survey[['employee_id', 'popularity']], 
+    left_on='id', 
+    right_on='employee_id', 
+    how='left')
+
+# Calculate average popularity by location
+average_popularity_by_location.groupby('location')['popularity'].mean().reset_index()
+```
+
+<img width="609" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/da3a538a-0280-49c8-a983-fe800fa0b86b">
+
+### 📌 [Lyft | Easy | Lyft Driver Wages](https://platform.stratascratch.com/coding/10003-lyft-driver-wages?code_type=2)
+
+Find all Lyft drivers who earn either equal to or less than 30k USD or equal to or more than 70k USD. Output all details related to retrieved records.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+lyft_drivers.head()
+
+lyft_drivers[(lyft_drivers['yearly_salary'] <= 30000) | (lyft_drivers['yearly_salary'] >= 70000)]
+```
+
+<img width="643" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/eafa7555-37ac-4865-b2cc-31b2fa0b6db4">
 
 
