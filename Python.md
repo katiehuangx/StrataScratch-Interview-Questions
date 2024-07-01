@@ -259,3 +259,52 @@ merged_data.drop(columns=['id', 'cust_id']).sort_values(by=['first_name', 'order
 ```
 
 <img width="633" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/e56b51d4-0023-4734-a9d5-94619c471940">
+
+### 📌 [Amazon | Easy | Number of Workers by Department Starting in April or Later](https://platform.stratascratch.com/coding/9847-find-the-number-of-workers-by-department?code_type=2)
+
+Find the number of workers by department who joined in or after April. Output the department name along with the corresponding number of workers. Sort records based on the number of workers in descending order.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+worker.head()
+
+# Convert 'joining_date' to datetime type
+worker['joining_date'] = pd.to_datetime(worker['joining_date'])
+
+# Filter workers who joined on or after April 1st, 2014 at midnight
+filtered_workers = worker[worker['joining_date'] >= '2014-04-01 00:00:00']
+
+# Group workers by department and count number of rows
+# Sort output by number of rows in descending order
+filtered_workers.groupby('department').size().reset_index(name='num_workers').sort_values(by='num_workers', ascending=False)
+```
+
+<img width="480" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/025b51ef-ed1f-41b5-a8e6-44b7b8d7547f">
+
+### 📌 [Microsoft/Amazon | Easy | Admin Department Employees Beginning in April or Later](https://platform.stratascratch.com/coding/9845-find-the-number-of-employees-working-in-the-admin-department?code_type=2)
+
+Find the number of employees working in the Admin department that joined in April or later.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+worker.head()
+
+# Convert 'joining_date' to datetime type
+worker['joining_date'] = pd.to_datetime(worker['joining_date'])
+
+# Filter workers who joined on or after January 1st, 2014 and belong to 'Admin' department
+filtered_workers = worker[(worker['joining_date'] >= '2014-04-01 00:00:00') & (worker['department'] == 'Admin')]
+
+# Get number of rows using shape
+filtered_workers.shape[0]
+```
+
+<img width="243" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/c9a7a427-62d2-49e0-830a-0fa7a7b70734">
+
+
