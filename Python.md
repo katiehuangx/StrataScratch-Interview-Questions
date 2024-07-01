@@ -200,3 +200,62 @@ filtered_libraries['home_library_code'].unique()
 ```
 
 <img width="282" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/160c3b60-a818-4549-aa44-6bd01e6c50ad">
+
+### 📌 [Amazon/Shopify | Easy | Order Details](https://platform.stratascratch.com/coding/9913-order-details?code_type=2)
+
+Find order details made by Jill and Eva. Consider the Jill and Eva as first names of customers. Output the order date, details and cost along with the first name. Order records based on the customer id in ascending order.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+customers.head()
+
+# Filter rows where 'first_name' is either 'Jill' or 'Eva'
+filtered_customers = customers.loc[(customers['first_name'] == 'Jill') | (customers['first_name'] == 'Eva')]
+
+# Select 'id' and 'first_name' columns from filtered_customers
+selected_customers = filtered_customers[['id', 'first_name']]
+
+# Merge 'selected_customers' with 'orders' on 'cust_id'
+merged_orders = pd.merge(
+    selected_customers,
+    orders[['cust_id', 'order_date', 'order_details', 'total_order_cost']],
+    left_on='id',
+    right_on='cust_id',
+    how='inner'
+    ).sort_values(by='cust_id', ascending=True) # Sort result by 'cust_id' in ascending order
+
+# Select and reorder columns for the final output
+merged_orders[['order_date', 'order_details', 'total_order_cost', 'first_name']]
+```
+
+<img width="646" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/15b53443-53ac-4d7e-92b6-2c5813bce40e">
+
+### 📌 [Apple/Amazon | Easy | Customer Details](https://platform.stratascratch.com/coding/9891-customer-details?code_type=2)
+
+Find the details of each customer regardless of whether the customer made an order. Output the customer's first name, last name, and the city along with the order details. Sort records based on the customer's first name and the order details in ascending order.
+
+```python
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+customers.head()
+
+# Merge customers and orders on 'id' and 'cust_id'
+merged_data = pd.merge(
+    customers[['id', 'first_name', 'last_name', 'city']],
+    orders[['cust_id', 'order_details']],
+    left_on='id',
+    right_on='cust_id',
+    how='left'
+    )
+
+# Drop 'id' and 'cust_id' columns from the merged_data
+# Sort output by 'first_name' and 'order_details' in ascending order   
+merged_data.drop(columns=['id', 'cust_id']).sort_values(by=['first_name', 'order_details'], ascending=True)
+```
+
+<img width="633" alt="image" src="https://github.com/katiehuangx/StrataScratch-Interview-Questions/assets/81607668/e56b51d4-0023-4734-a9d5-94619c471940">
